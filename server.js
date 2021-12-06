@@ -118,13 +118,13 @@ app.post('/register', async (req, resp) => {
 app.post('/login', (req, res) => {
     passport.authenticate('local', (err, user) => {
         if (err) {
-            res.json({ message: `Error during authentication! Error: ${err}` }).end();
+            res.json({ status: 400, body: { errorMessage: `Error during authentication! Error: ${err}` } }).end();
         } else {
             req.logIn(user, (err) => {
                 if (err) {
-                    res.json({ status: 401, message: `Error during login! Error: ${err}` }).end();
+                    res.json({ status: 400, body: { errorMessage: `Error during login! Error: ${err}` } }).end();
                 } else {
-                    res.json({ status: 200, message: 'Authenticated' })
+                    res.json({ status: 200, body: { message: 'Authenticated' } })
                 }
             })
         }
