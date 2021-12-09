@@ -43,7 +43,6 @@ passportConfig(passport, (username) => {
         FROM tUsers
         WHERE username ='${username}'
     `, (err, res) => {
-            console.log('username check', res);
             if (res.length > 0) {
                 resolve(res[0])
             } else {
@@ -51,7 +50,6 @@ passportConfig(passport, (username) => {
             }
         })
     }, (err) => {
-        console.log('errore promise ', err);
         reject({ errorMessage: 'Error while fetching info about user' });
     })
 

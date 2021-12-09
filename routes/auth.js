@@ -1,8 +1,6 @@
 const { getFormattedDate } = require("../lib/date");
 
 const checkAuthentication = (req, res, next) => {
-    console.log('check authentication ', req.user);
-    console.log(req.isAuthenticated());
     if (!req.isAuthenticated() || !req.user) {
         res.json({ status: 403, severity: 'error', body: { errorMessage: 'Not authenticated' } }).end();
     }
@@ -48,7 +46,6 @@ const authenticationRoutes = (app, connection, passport) => {
                             }
                         })
                     } catch (e) {
-                        console.log('e', e);
                         resp.json({
                             status: 445,
                             severity: 'Warning',
@@ -77,9 +74,7 @@ const authenticationRoutes = (app, connection, passport) => {
                 res.json({ status: 444, body: { errorMessage: err.errorMessage } }).end();
             } else {
                 req.logIn(user, (err) => {
-                    console.log('error', err);
                     if (err) {
-                        console.log(err);
                         const errorMessage = 'Error during login! ' + JSON.stringify(err);
                         res.json({ status: 444, body: { errorMessage } }).end();
                     } else {
