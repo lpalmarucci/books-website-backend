@@ -22,7 +22,7 @@ const authenticationRoutes = (app, connection, passport) => {
                         body: {
                             errorMessage: 'User already registered, please log in'
                         }
-                    })
+                    }).end()
                 } else {
                     try {
                         const date = getFormattedDate(new Date);
@@ -34,7 +34,7 @@ const authenticationRoutes = (app, connection, passport) => {
                                     body: {
                                         message: 'Registration completed'
                                     }
-                                })
+                                }).end()
                             } else {
                                 resp.json({
                                     status: 500,
@@ -42,7 +42,7 @@ const authenticationRoutes = (app, connection, passport) => {
                                     body: {
                                         errorMessage: 'Unable to complete registration'
                                     }
-                                })
+                                }).end()
                             }
                         })
                     } catch (e) {
@@ -52,7 +52,7 @@ const authenticationRoutes = (app, connection, passport) => {
                             body: {
                                 errorMessage: 'Username already taken'
                             }
-                        })
+                        }).end()
                     }
                 }
             });
@@ -63,7 +63,7 @@ const authenticationRoutes = (app, connection, passport) => {
                 body: {
                     errorMessage: e
                 }
-            })
+            }).end();
         }
     })
 
@@ -78,14 +78,14 @@ const authenticationRoutes = (app, connection, passport) => {
                         const errorMessage = 'Error during login! ' + JSON.stringify(err);
                         res.json({ status: 444, body: { errorMessage } }).end();
                     } else {
-                        res.json({ status: 200, body: { message: 'Authenticated' } })
+                        res.json({ status: 200, body: { message: 'Authenticated' } }).end();
                     }
                 })
             }
         })(req, res)
     })
 
-    app.post('/authenticated', checkAuthentication, (req, res) => res.json({ status: 200, severity: 'no-error', body: { message: 'Authenticated' } }));
+    app.post('/authenticated', checkAuthentication, (req, res) => res.json({ status: 200, severity: 'no-error', body: { message: 'Authenticated' } }).end());
 
     app.use('/api', checkAuthentication)
 }
